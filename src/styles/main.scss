@@ -1,0 +1,13 @@
+@import './variables';
+@import './fonts';
+
+
+// Global css
+input:focus {
+  outline: 0;
+}
+
+button:focus
+textarea:focus {
+  outline: 0;
+}
