@@ -1,8 +1,11 @@
 @import './variables';
 @import './fonts';
 
-
 // Global css
+body {
+  margin: 0 !important;
+}
+
 input:focus {
   outline: 0;
 }
