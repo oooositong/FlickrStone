@@ -7,23 +7,46 @@
     </header>
 
     <div class="search-bar">
-      <input type="text" placeholder="Search something you like..." :value="keyword">
+      <input
+        type="text"
+        placeholder="Search something you like..."
+        v-model="keyword"
+        @keyup.enter="searchByText"
+        >
     </div>
 
-
+    <div class="gallery">
+      <FlickrCard
+        v-for="(item, index) in photoList"
+        :key="index"
+        :media="item" />
+    </div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+import FlickrCard from './components/FlickrCard.vue';
 import './styles/main.scss';
+
 export default {
   name: 'App',
   components: {
+    FlickrCard
   },
   data() {
     return {
       keyword: ''
     };
+  },
+  computed: {
+    ...mapState('gallery', ['photoList'])
+  },
+  methods: {
+    ...mapActions('gallery', ['searchPhotos']),
+    searchByText() {
+      this.searchPhotos({ text: this.keyword });
+    }
   }
 }
 </script>
@@ -64,7 +87,7 @@ export default {
       margin: $x32;
       border-radius: $x32;
       font-size: $x16;
-      font-family: $noble;
+      font-family: $nobile;
       border: 1px solid $cyan;
       padding-left: $x24;
       cursor: pointer;
@@ -73,6 +96,12 @@ export default {
     input:focus {
       border-color: $red;
     }
+  }
+
+  .gallery {
+    margin: $x16;
+    display: flex;
+    flex-wrap: wrap;
   }
 }
 </style>
